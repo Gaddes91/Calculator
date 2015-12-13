@@ -14,6 +14,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
     
+    // This is the "green arrow" that goes from the controller to the model
+    var brain = CalculatorBrain()
+    
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         
@@ -27,60 +30,30 @@ class ViewController: UIViewController {
     
     @IBAction func operate(sender: UIButton) {
         
-        let operation = sender.currentTitle!
-        
         if userIsInTheMiddleOfTypingANumber {
             enter()
         }
         
-        switch operation {
-        case "×": performOperation { $0 * $1 }
-        case "÷": performOperation { $1 / $0 }
-        case "+": performOperation { $0 + $1 }
-        case "−": performOperation { $1 - $0 }
-        case "√": performOperation { sqrt($0) }
-        default: break
+        if let operation = sender.currentTitle {
+            if let result = brain.performOperation(operation) {
+                displayValue = result
+            } else {
+                displayValue = 0
+            }
         }
     }
-    
-    func performOperation(operation: (Double, Double) -> Double) {
-        
-        // Check that there are at least TWO numbers in the operandStack
-        if operandStack.count >= 2 {
-            
-            // Multiply the last two numbers in the operandStack and update displayValue with the result
-            displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
-            
-            // Call enter() function
-            enter()
-        }
-    }
-    
-    // MARK: Potential error: Overloading of obj-c method
-    // This function has been made private to remove the error regarding the overloading of obj-c methods. If this causes an error further down the line, the keyword "private" should be removed, and the function renamed to something unique.
-    private func performOperation(operation: Double -> Double) {
-        
-        // Check that there is at least ONE number in the operandStack
-        if operandStack.count >= 1 {
-            displayValue = operation(operandStack.removeLast())
-            enter()
-        }
-    }
-    
-    
-    // Declare operandStack as an array of type double
-    var operandStack: [Double] = []
     
     @IBAction func enter() {
         // Reset - if user clicks "enter" they are no longer typing a number
         userIsInTheMiddleOfTypingANumber = false
         
-        // Append current digit to operandStack (double value returned from computed property displayValue)
-        operandStack.append(displayValue)
-        
-        print("operandStack = \(operandStack)")
+        // Push operand onto the stack
+        if let result = brain.pushOperand(displayValue) {
+            displayValue = result
+        } else {
+            displayValue = 0
+        }
     }
-    
     
     // Computed property - get string value of display (UILabel) and return double value
     var displayValue: Double {
@@ -107,6 +80,5 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 }
 
