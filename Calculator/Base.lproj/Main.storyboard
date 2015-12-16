@@ -201,6 +201,9 @@
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="π"/>
+                                <connections>
+                                    <action selector="appendSpecial:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jeq-FT-Hu2"/>
+                                </connections>
                             </button>
                         </subviews>
                         <animations/>

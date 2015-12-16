@@ -19,7 +19,7 @@ class CalculatorBrain {
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
         // Create a new case for special characters e.g. PI
-        case SpecialOps(String, Double)
+        case SpecialOperands(String, Double)
         
         // Add a read-only computed property. This will turn the Op into a String, so that it can be printed to the debug console
         var description: String {
@@ -31,13 +31,12 @@ class CalculatorBrain {
                     return symbol
                 case .BinaryOperation(let symbol, _):
                     return symbol
-                case .SpecialOps(let symbol, _): // MARK: SpecialOps
+                case .SpecialOperands(let symbol, _): // Case to hold symbols and constants such as PI
                     return symbol
                 }
             }
         }
     }
-    
     
     // Create array of type Op
     private var opStack = [Op]()
@@ -65,7 +64,7 @@ class CalculatorBrain {
         learnOp(Op.UnaryOperation("√", sqrt))
         learnOp(Op.UnaryOperation("sin") { sin($0 * (M_PI / 180)) }) // Convert user input from degrees to radians
         learnOp(Op.UnaryOperation("cos") { cos($0 * (M_PI / 180)) }) // Convert user input from degrees to radians
-        learnOp(Op.SpecialOps("π", M_PI)) // MARK: SpecialOps
+        learnOp(Op.SpecialOperands("π", M_PI))
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
@@ -106,8 +105,8 @@ class CalculatorBrain {
                     }
                 }
             
-            case .SpecialOps(_, _): // MARK: SpecialOps
-                break
+            case .SpecialOperands(_, let value):
+                return (value, remainingOps)
             }
         }
         
