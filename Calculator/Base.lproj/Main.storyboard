@@ -188,6 +188,10 @@
                                 <rect key="frame" x="28" y="468.5" width="102.5" height="123.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="."/>
+                                <connections>
+                                    <action selector="appendDigit:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CGu-Zw-xeT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4KA-De-781">
                                 <rect key="frame" x="249" y="468.5" width="102" height="123.5"/>
@@ -295,12 +299,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="decimalPoint" destination="hRe-IG-UKX" id="1bV-fJ-EWe"/>
                         <outlet property="display" destination="Xkg-d8-unL" id="GZl-6B-SEa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="380" y="310"/>
+            <point key="canvasLocation" x="-26" y="294"/>
         </scene>
     </scenes>
 </document>

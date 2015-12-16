@@ -14,17 +14,25 @@ class ViewController: UIViewController {
     @IBOutlet weak var display: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
     
+    @IBOutlet weak var decimalPoint: UIButton!
+    
     // This is the "green arrow" that goes from the controller to the model
     var brain = CalculatorBrain()
     
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         
-        if userIsInTheMiddleOfTypingANumber {
-            display.text = display.text! + digit
+        // If current digit entered by user contains decimal point, then check whether current display contains decimal point
+        if digit == "." && display.text?.rangeOfString(digit) != nil { // TODO: 1.1 - If user enters decimal point before any other number, the number "0" should be prepended to the display
+            // Nothing happens - a second decimal point will NOT be appended to display
         } else {
-            display.text = digit
-            userIsInTheMiddleOfTypingANumber = true
+            // This is the original code copied from lecture
+            if userIsInTheMiddleOfTypingANumber {
+                display.text = display.text! + digit
+            } else {
+                display.text = digit
+                userIsInTheMiddleOfTypingANumber = true
+            }
         }
     }
     
