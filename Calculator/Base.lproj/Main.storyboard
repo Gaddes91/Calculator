@@ -92,6 +92,7 @@
                                 <rect key="frame" x="469.5" y="74" width="102.5" height="123.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="sin"/>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0UX-Eb-1Y6"/>
                                 </connections>
@@ -100,16 +101,9 @@
                                 <rect key="frame" x="469.5" y="205.5" width="102.5" height="123.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="cos"/>
                                 <connections>
                                     <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xae-fH-KaW"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkc-sb-qIT">
-                                <rect key="frame" x="469.5" y="337" width="102.5" height="123.5"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <connections>
-                                    <action selector="operate:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hbV-np-y0W"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fkl-76-Ifm">
@@ -202,11 +196,16 @@
                                     <action selector="enter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="laW-aa-nvG"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jq8-Kl-bI7">
+                                <rect key="frame" x="469" y="336" width="102.5" height="123.5"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="π"/>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="pkc-sb-qIT" firstAttribute="width" secondItem="Oyz-tP-tbz" secondAttribute="width" id="08a-4D-SIg"/>
                             <constraint firstItem="buf-KP-Rr4" firstAttribute="top" secondItem="nhc-Xn-g3V" secondAttribute="bottom" constant="8" id="0wo-pg-RMo"/>
                             <constraint firstItem="hRe-IG-UKX" firstAttribute="width" secondItem="Oyz-tP-tbz" secondAttribute="width" id="25o-9o-5PF"/>
                             <constraint firstItem="nhc-Xn-g3V" firstAttribute="width" secondItem="Oyz-tP-tbz" secondAttribute="width" id="37c-YA-Uyb"/>
@@ -227,10 +226,8 @@
                             <constraint firstItem="ONK-gT-ouj" firstAttribute="leading" secondItem="Y1c-e0-XK3" secondAttribute="trailing" constant="8" id="CQo-1u-blF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Xkg-d8-unL" secondAttribute="trailing" id="DhL-fq-EjB"/>
                             <constraint firstItem="fkl-76-Ifm" firstAttribute="leading" secondItem="cD9-6X-m9n" secondAttribute="trailing" constant="8" id="E3P-vd-F6N"/>
-                            <constraint firstItem="pkc-sb-qIT" firstAttribute="top" secondItem="buf-KP-Rr4" secondAttribute="bottom" constant="8" id="EZD-tz-Zi8"/>
                             <constraint firstItem="aFe-IQ-ZgD" firstAttribute="leading" secondItem="5Ie-rK-VRc" secondAttribute="trailing" constant="8" id="GvJ-wk-Xlw"/>
                             <constraint firstItem="buf-KP-Rr4" firstAttribute="width" secondItem="Oyz-tP-tbz" secondAttribute="width" id="H0M-JQ-Hz7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="pkc-sb-qIT" secondAttribute="trailing" constant="8" id="H5r-Nv-zUK"/>
                             <constraint firstItem="buf-KP-Rr4" firstAttribute="height" secondItem="Oyz-tP-tbz" secondAttribute="height" id="HEd-1d-qyU"/>
                             <constraint firstItem="4KA-De-781" firstAttribute="width" secondItem="Oyz-tP-tbz" secondAttribute="width" id="HUg-Ls-hue"/>
                             <constraint firstItem="kHA-Sw-5lr" firstAttribute="top" secondItem="Xkg-d8-unL" secondAttribute="bottom" constant="8" id="IYg-j4-043"/>
@@ -241,7 +238,6 @@
                             <constraint firstItem="ECO-e2-G4D" firstAttribute="height" secondItem="Oyz-tP-tbz" secondAttribute="height" id="Ki5-yf-MKj"/>
                             <constraint firstItem="dKD-6J-w4u" firstAttribute="top" secondItem="kHA-Sw-5lr" secondAttribute="bottom" constant="8" id="Kyi-Wv-i1Z"/>
                             <constraint firstItem="3Jr-NA-k9r" firstAttribute="width" secondItem="Oyz-tP-tbz" secondAttribute="width" id="Lo9-Du-fEK"/>
-                            <constraint firstItem="pkc-sb-qIT" firstAttribute="leading" secondItem="s8F-8A-1NH" secondAttribute="trailing" constant="8" id="NCY-MD-JpS"/>
                             <constraint firstItem="hRe-IG-UKX" firstAttribute="height" secondItem="Oyz-tP-tbz" secondAttribute="height" id="NRY-JM-Q0T"/>
                             <constraint firstItem="5Ie-rK-VRc" firstAttribute="top" secondItem="ECO-e2-G4D" secondAttribute="bottom" constant="8" id="O2r-OX-96o"/>
                             <constraint firstItem="aFe-IQ-ZgD" firstAttribute="width" secondItem="Oyz-tP-tbz" secondAttribute="width" id="Ol1-rf-2Rx"/>
@@ -282,9 +278,7 @@
                             <constraint firstItem="opv-FC-tBN" firstAttribute="height" secondItem="Oyz-tP-tbz" secondAttribute="height" id="mMP-fV-hM1"/>
                             <constraint firstItem="Y1c-e0-XK3" firstAttribute="top" secondItem="Xkg-d8-unL" secondAttribute="bottom" constant="8" id="nTT-oY-dl4"/>
                             <constraint firstItem="nhc-Xn-g3V" firstAttribute="leading" secondItem="kHA-Sw-5lr" secondAttribute="trailing" constant="8" id="oJ0-Xb-oIM"/>
-                            <constraint firstItem="fkl-76-Ifm" firstAttribute="top" secondItem="pkc-sb-qIT" secondAttribute="bottom" constant="8" id="p8j-tM-rKh"/>
                             <constraint firstItem="kHA-Sw-5lr" firstAttribute="leading" secondItem="ONK-gT-ouj" secondAttribute="trailing" constant="8" id="pBi-4z-WGH"/>
-                            <constraint firstItem="pkc-sb-qIT" firstAttribute="height" secondItem="Oyz-tP-tbz" secondAttribute="height" id="paW-fK-hxt"/>
                             <constraint firstItem="4KA-De-781" firstAttribute="leading" secondItem="opv-FC-tBN" secondAttribute="trailing" constant="8" id="piu-1R-QbL"/>
                             <constraint firstItem="opv-FC-tBN" firstAttribute="width" secondItem="Oyz-tP-tbz" secondAttribute="width" id="qac-lL-RE2"/>
                             <constraint firstItem="s8F-8A-1NH" firstAttribute="top" secondItem="dKD-6J-w4u" secondAttribute="bottom" constant="8" id="qb6-aL-30N"/>
@@ -299,7 +293,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="decimalPoint" destination="hRe-IG-UKX" id="1bV-fJ-EWe"/>
                         <outlet property="display" destination="Xkg-d8-unL" id="GZl-6B-SEa"/>
                     </connections>
                 </viewController>
