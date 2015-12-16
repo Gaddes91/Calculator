@@ -18,6 +18,8 @@ class CalculatorBrain {
         case Operand(Double)
         case UnaryOperation(String, Double -> Double)
         case BinaryOperation(String, (Double, Double) -> Double)
+        // Create a new case for special characters e.g. PI
+        case SpecialOps(String, Double)
         
         // Add a read-only computed property. This will turn the Op into a String, so that it can be printed to the debug console
         var description: String {
@@ -28,6 +30,8 @@ class CalculatorBrain {
                 case .UnaryOperation(let symbol, _):
                     return symbol
                 case .BinaryOperation(let symbol, _):
+                    return symbol
+                case .SpecialOps(let symbol, _): // MARK: SpecialOps
                     return symbol
                 }
             }
@@ -59,8 +63,9 @@ class CalculatorBrain {
         learnOp(Op.BinaryOperation("+", +))
         learnOp(Op.BinaryOperation("−") { $1 - $0 })
         learnOp(Op.UnaryOperation("√", sqrt))
-//        learnOp(Op.UnaryOperation("sin") { sin($0) })
-//        learnOp(Op.UnaryOperation("cos") { cos($0) })
+        learnOp(Op.UnaryOperation("sin") { sin($0 * (M_PI / 180)) }) // Convert user input from degrees to radians
+        learnOp(Op.UnaryOperation("cos") { cos($0 * (M_PI / 180)) }) // Convert user input from degrees to radians
+        learnOp(Op.SpecialOps("π", M_PI)) // MARK: SpecialOps
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
@@ -100,6 +105,9 @@ class CalculatorBrain {
                         return (operation(operand1, operand2), op2Evaluation.remainingOps)
                     }
                 }
+            
+            case .SpecialOps(_, _): // MARK: SpecialOps
+                break
             }
         }
         
@@ -110,7 +118,7 @@ class CalculatorBrain {
     func evaluate() -> Double? {
         // This function returns an Optional(Double) because the user might, for example, try to evaluate an operation (+, -, etc.) before entering any operands (digits). In this case we want to return nil, otherwise the program would crash.
         
-        // Use a tuple to hold the result of the recursive evaluate() function. Note that the names "result" and "_" do not have to match up with the names used in the recursive function
+        // Use a tuple to hold the result of the recursive evaluate() function. Note that the names "result" and "remainder" do not have to match up with the names used in the recursive function
         let (result, remainder) = evaluate(opStack)
         print("\(opStack) = \(result) with \(remainder) left over")
         return result
