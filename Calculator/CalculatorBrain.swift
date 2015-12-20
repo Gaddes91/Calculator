@@ -11,7 +11,7 @@ import Foundation
 class CalculatorBrain {
     
     // This enum implements the protocol CustomStringConvertible
-    private enum Op: CustomStringConvertible {
+    enum Op: CustomStringConvertible {
         
         // The use of brackets after the case name allows us to associate a data type with any case in an enum - this feature is specific to Swift!
         // UnaryOperation and BinaryOperation both take a function as their second parameter. This is shown by the use of the return arrow (->)
@@ -38,10 +38,10 @@ class CalculatorBrain {
         }
     }
     
-    private var opStack = [Op]() // Create array of type Op
+    var opStack = [Op]() // Create array of type Op
     
-    private var opStackOperand = [Op]() // Holds operands only
-    private var opStackOperation = [Op]() // Holds operations only
+    var opStackOperand = [Op]() // Holds operands only
+    var opStackOperation = [Op]() // Holds operations only
     
     
     // Create dictionary to hold all known operations

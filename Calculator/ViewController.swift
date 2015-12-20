@@ -110,26 +110,18 @@ class ViewController: UIViewController {
         }
     }
     
-//    // --- Number formatting functions below
-//    
-//    // Truncate display value if it is an integer
-//    func truncateDisplayValueIfInteger(displayVal: Double) -> String {
-//        
-//        var result = ""
-//        
-//        if displayVal % 1 == 0 { // If value can be divided exactly by 1 (i.e. it is an integer)
-//            let formatter = NSNumberFormatter()
-//            formatter.maximumFractionDigits = 0 // No decimal places allowed
-//            
-//            result = formatter.stringFromNumber(displayVal)!
-//            
-//        } else {
-//            result = "\(displayVal)" // Simply print the String value, with decimal points included
-//        }
-//        return result
-//    }
-    
-    
+    @IBAction func clearAll(sender: UIButton) { // Clear all values on button press
+        
+        display.text = "" // Clear display
+        displayHistory.text = "" // Clear displayHistory
+        
+        userIsInTheMiddleOfTypingANumber = false // Reset userIsInTheMiddleOfTypingANumber
+        
+        brain.opStack = []
+        brain.opStackOperand = []
+        brain.opStackOperation = []
+        brain.displayHistory = ""
+    }
     
     
     
