@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     // Variable declaration
     @IBOutlet weak var display: UILabel!
+    @IBOutlet weak var displayHistory: UILabel!
     var userIsInTheMiddleOfTypingANumber = false
     
     // This is the "green arrow" that goes from the controller to the model
@@ -90,13 +91,30 @@ class ViewController: UIViewController {
         }
     }
     
+    // Truncate display value if it is an integer
+    func truncateDisplayValueIfInteger(displayVal: Double) -> String {
+        
+        var result = ""
+        
+        if displayVal % 1 == 0 { // If value can be divided exactly by 1 (i.e. it is an integer)
+            let formatter = NSNumberFormatter()
+            formatter.maximumFractionDigits = 0 // No decimal places allowed
+            
+            result = formatter.stringFromNumber(displayVal)!
+            
+        } else {
+            result = "\(displayVal)" // Simply print the String value
+        }
+        return result
+    }
+    
     // Computed property - get string value of display (UILabel) and return double value
     var displayValue: Double {
         get {
             return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
         }
         set {
-            display.text = "\(newValue)"
+            display.text = truncateDisplayValueIfInteger(newValue)
             userIsInTheMiddleOfTypingANumber = false
         }
     }
