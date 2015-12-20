@@ -10,7 +10,7 @@ import Foundation
 
 class CalculatorBrain {
     
-    // This enum implemenets the protocol CustomStringConvertible
+    // This enum implements the protocol CustomStringConvertible
     private enum Op: CustomStringConvertible {
         
         // The use of brackets after the case name allows us to associate a data type with any case in an enum - this feature is specific to Swift!
@@ -38,8 +38,11 @@ class CalculatorBrain {
         }
     }
     
-    // Create array of type Op
-    private var opStack = [Op]()
+    private var opStack = [Op]() // Create array of type Op
+    
+    private var opStackOperand = [Op]() // Holds operands only
+    private var opStackOperation = [Op]() // Holds operations only
+    
     
     // Create dictionary to hold all known operations
     // Key:Value -> String:Op
@@ -124,7 +127,9 @@ class CalculatorBrain {
     }
     
     func pushOperand(operand: Double) -> Double? {
-        opStack.append(Op.Operand(operand))
+        
+        opStack.append(Op.Operand(operand)) // Append to opStack
+        opStackOperand.append(Op.Operand(operand)) // Append to opStackOperand
         
         // Every time we push an operand it will return the evaluation (-> Double?)
         return evaluate()
@@ -134,11 +139,79 @@ class CalculatorBrain {
         
         // Whenever we look something up in a dictionary, an optional is returned. This is because we cannot be sure the thing we are looking up actually exists
         if let operation = knownOps[symbol] {
-            opStack.append(operation)
+            opStack.append(operation) // Append to opStack
+            opStackOperation.append(operation) // Append to opStackOperation
         }
         
         // Every time we perform an operation it will return the evaluation (-> Double?)
         return evaluate()
     }
+    
+    // Must be defined outside of the following function to prevent the displayHistory from resetting to "" each time the function is called
+    var displayHistory = ""
+    
+    // Update display history to reflect the history of operands together with the operations performed upon them
+    func updateDisplayHistory() -> String {
+        
+        /* This "if" statement confirms that opStackOperand is not empty before proceeding.
+        * If the operation is performed whilst the opStackOperand is empty, the program will crash.
+        */
+        if !opStackOperand.isEmpty {
+            
+            /* If displayHistory is empty then two operands must be added to the displayHistory (both the operand before and the operand after the operator symbol itself)
+            * To access the operand before the operator, we must take the penultimate value from the operand-only stack (opStackOperand.removeAtIndex(opStackOperand.count - 2))
+            * To access the operand after, we simply use opStackOperand.removeLast()
+            * We update displayHistory by appending each op, as a string, to the end of the existing displayHistory (displayHistory += "\(...)")
+            */
+            if displayHistory.isEmpty {
+                // Append the operand before the operation, the operation itself and, finally, the second operand
+                displayHistory += truncateOperandIfInteger("\(opStackOperand.removeAtIndex(opStackOperand.count - 2))")
+                displayHistory += truncateOperandIfInteger("\(opStackOperation.removeLast())")
+                displayHistory += truncateOperandIfInteger("\(opStackOperand.removeLast())")
+            } else {
+                // If displayHistory is not empty then our job is easier - we only have to add the operation symbol and the latest operand
+                displayHistory += truncateOperandIfInteger("\(opStackOperation.removeLast())")
+                displayHistory += truncateOperandIfInteger("\(opStackOperand.removeLast())")
+            }
+        }
+        return displayHistory
+    }
+    
+    
+    // --- Number formatting functions below
+    
+    // Truncate display value if it is an integer
+    func truncateDisplayValueIfInteger(displayVal: Double) -> String {
+        
+        var result = ""
+        
+        if displayVal % 1 == 0 { // If value can be divided exactly by 1 (i.e. it is an integer)
+            let formatter = NSNumberFormatter()
+            formatter.maximumFractionDigits = 0 // No decimal places allowed
+            
+            result = formatter.stringFromNumber(displayVal)!
+            
+        } else {
+            result = "\(displayVal)" // Simply print the String value, with decimal points included
+        }
+        return result
+    }
+    
+    // Same as above except this function takes String as an argument. Once string has been converted to Double
+    private func truncateOperandIfInteger(operand: String) -> String {
+        
+        var result = ""
+        
+        // Convert String to Double and then call truncateDisplayValueIfInteger() to truncate number
+        if let doubleValue = NSNumberFormatter().numberFromString(operand)?.doubleValue {
+            // The return type of truncateDisplayValueIfInteger is String
+            result = truncateDisplayValueIfInteger(doubleValue)
+        } else {
+            result = "\(operand)" // Simply print the String value, with decimal points included
+        }
+        
+        return result
+    }
+    
     
 }

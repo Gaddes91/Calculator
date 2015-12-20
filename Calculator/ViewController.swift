@@ -25,13 +25,14 @@ class ViewController: UIViewController {
         switch digit {
             
         case ".":
-            if display.text?.rangeOfString(digit) != nil {
-                // Nothing happens - if the display currently contains a decimal point, a second decimal point will NOT be appended to display
-                
-                // TODO: 1.1 - If user enters decimal point before any other number, the number "0" should be prepended to the display
-                
-            } else {
-                fallthrough // Fall through to case directly below i.e. execute code in the default case
+            if userIsInTheMiddleOfTypingANumber {
+                if display.text?.rangeOfString(digit) != nil { // If current number already contains a decimal point
+                    // Nothing happens - a second decimal point will NOT be appended to display
+                } else {
+                    fallthrough // Fall through to case directly below i.e. execute code in the default case
+                }
+            } else { // If current number does NOT contain a decimal point
+                fallthrough
             }
             
         default:
@@ -77,6 +78,9 @@ class ViewController: UIViewController {
                 displayValue = 0
             }
         }
+        
+        // Update displayHistory each time an operation is performed
+        displayHistory.text = brain.updateDisplayHistory()
     }
     
     @IBAction func enter() {
@@ -91,33 +95,41 @@ class ViewController: UIViewController {
         }
     }
     
-    // Truncate display value if it is an integer
-    func truncateDisplayValueIfInteger(displayVal: Double) -> String {
-        
-        var result = ""
-        
-        if displayVal % 1 == 0 { // If value can be divided exactly by 1 (i.e. it is an integer)
-            let formatter = NSNumberFormatter()
-            formatter.maximumFractionDigits = 0 // No decimal places allowed
-            
-            result = formatter.stringFromNumber(displayVal)!
-            
-        } else {
-            result = "\(displayVal)" // Simply print the String value
-        }
-        return result
-    }
-    
     // Computed property - get string value of display (UILabel) and return double value
     var displayValue: Double {
         get {
-            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+            if let number = NSNumberFormatter().numberFromString(display.text!) {
+                return number.doubleValue
+            } else {
+                return 0.0
+            }
         }
         set {
-            display.text = truncateDisplayValueIfInteger(newValue)
+            display.text = brain.truncateDisplayValueIfInteger(newValue)
             userIsInTheMiddleOfTypingANumber = false
         }
     }
+    
+//    // --- Number formatting functions below
+//    
+//    // Truncate display value if it is an integer
+//    func truncateDisplayValueIfInteger(displayVal: Double) -> String {
+//        
+//        var result = ""
+//        
+//        if displayVal % 1 == 0 { // If value can be divided exactly by 1 (i.e. it is an integer)
+//            let formatter = NSNumberFormatter()
+//            formatter.maximumFractionDigits = 0 // No decimal places allowed
+//            
+//            result = formatter.stringFromNumber(displayVal)!
+//            
+//        } else {
+//            result = "\(displayVal)" // Simply print the String value, with decimal points included
+//        }
+//        return result
+//    }
+    
+    
     
     
     
