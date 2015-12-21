@@ -87,25 +87,31 @@ class ViewController: UIViewController {
         // Reset - if user clicks "enter" they are no longer typing a number
         userIsInTheMiddleOfTypingANumber = false
         
-        // Push operand onto the stack
-        if let result = brain.pushOperand(displayValue) {
-            displayValue = result
-        } else {
-            displayValue = 0
+        
+        if let value = displayValue { // Check displayValue is not nil
+            if let result = brain.pushOperand(value) { // Push operand onto the stack
+                displayValue = result
+            } else {
+                displayValue = 0
+            }
         }
     }
     
-    // Computed property - get string value of display (UILabel) and return double value
-    var displayValue: Double {
+    // Computed property - get string value of display (UILabel) and return optional double value
+    var displayValue: Double? {
         get {
             if let number = NSNumberFormatter().numberFromString(display.text!) {
                 return number.doubleValue
             } else {
-                return 0.0
+                return nil
             }
         }
         set {
-            display.text = brain.truncateDisplayValueIfInteger(newValue)
+            if let value = newValue { // Check newValue is not nil
+                display.text = brain.truncateDisplayValueIfInteger(value)
+            } else {
+                display.text = "" // Clear display if newValue is nil
+            }
             userIsInTheMiddleOfTypingANumber = false
         }
     }
