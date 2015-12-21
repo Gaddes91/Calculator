@@ -129,6 +129,18 @@ class ViewController: UIViewController {
         brain.displayHistory = ""
     }
     
+    @IBAction func backspace(sender: UIButton) { // Remove digits from primary display one at a time
+        
+        if var text = display.text { // Check display.text is not nil. Use "var" because "text" must be mutable
+            if !text.isEmpty { // Check text is not empty (i.e. it contains characters that can be removed)
+                text.removeAtIndex(text.endIndex.predecessor()) // Remove last digit
+                display.text = text
+            }
+        }
+    }
+    
+    
+    
     
     
     
