@@ -23,7 +23,7 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "calculator-icon_120.png",
+      "filename" : "Icon_120.png",
       "scale" : "2x"
     },
     {
@@ -54,19 +54,19 @@
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "calculator-icon_76.png",
+      "filename" : "Icon_76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "calculator-icon_152.png",
+      "filename" : "Icon_152.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "calculator-icon_167.png",
+      "filename" : "Icon_167.png",
       "scale" : "2x"
     }
   ],
