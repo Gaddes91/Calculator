@@ -57,7 +57,7 @@ class CalculatorBrain {
         // We cannot do this for division (÷) and minus (−), however, since the operations would be "popped off the stack" in the wrong order
         
         func learnOp(op: Op) {
-            knownOps[op.description] = op
+            knownOps[String(op)] = op
         }
         
         learnOp(Op.BinaryOperation("×", *))
@@ -139,8 +139,11 @@ class CalculatorBrain {
         
         // Whenever we look something up in a dictionary, an optional is returned. This is because we cannot be sure the thing we are looking up actually exists
         if let operation = knownOps[symbol] {
-            opStack.append(operation) // Append to opStack
-            opStackOperation.append(operation) // Append to opStackOperation
+            if let _ = evaluate() { // Check the result of evaluate is not nil (i.e. check that an operation has actually been performed)
+                
+                opStack.append(operation) // Append to opStack
+                opStackOperation.append(operation) // Append to opStackOperation
+            }
         }
         
         // Every time we perform an operation it will return the evaluation (-> Double?)
@@ -164,10 +167,12 @@ class CalculatorBrain {
             * We update displayHistory by appending each op, as a string, to the end of the existing displayHistory (displayHistory += "\(...)")
             */
             if displayHistory.isEmpty {
-                // Append the operand before the operation, the operation itself and, finally, the second operand
-                displayHistory += truncateOperandIfInteger("\(opStackOperand.removeAtIndex(opStackOperand.count - 2))")
-                displayHistory += truncateOperandIfInteger("\(opStackOperation.removeLast())")
-                displayHistory += truncateOperandIfInteger("\(opStackOperand.removeLast())")
+                if opStackOperand.count > 1 { // Check that two operands have been added to the stack (if only one operand is present, the array index will be out of bounds and the app will crash)
+                    // Append the operand before the operation, the operation itself and, finally, the second operand
+                    displayHistory += truncateOperandIfInteger("\(opStackOperand.removeAtIndex(opStackOperand.count - 2))")
+                    displayHistory += truncateOperandIfInteger("\(opStackOperation.removeLast())")
+                    displayHistory += truncateOperandIfInteger("\(opStackOperand.removeLast())")
+                }
             } else {
                 // If displayHistory is not empty then our job is easier - we only have to add the operation symbol and the latest operand
                 displayHistory += truncateOperandIfInteger("\(opStackOperation.removeLast())")
@@ -213,5 +218,11 @@ class CalculatorBrain {
         return result
     }
     
+    func clearBrain() { // Clear everything specific to the model
+        opStack = []
+        opStackOperand = []
+        opStackOperation = []
+        displayHistory = ""
+    }
     
 }

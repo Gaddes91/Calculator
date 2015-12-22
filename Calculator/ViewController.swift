@@ -76,6 +76,7 @@ class ViewController: UIViewController {
                 displayValue = result
             } else {
                 displayValue = 0
+                brain.clearBrain() // Clear everything in model if operation cannot be performed. This ensures the displayHistory remains blank. This is not very user-friendly but you win some, you lose some...
             }
         }
         
@@ -86,7 +87,6 @@ class ViewController: UIViewController {
     @IBAction func enter() {
         // Reset - if user clicks "enter" they are no longer typing a number
         userIsInTheMiddleOfTypingANumber = false
-        
         
         if let value = displayValue { // Check displayValue is not nil
             if let result = brain.pushOperand(value) { // Push operand onto the stack
@@ -118,15 +118,12 @@ class ViewController: UIViewController {
     
     @IBAction func clearAll(sender: UIButton) { // Clear all values on button press
         
-        display.text = "" // Clear display
+        display.text = "0" // Clear display
         displayHistory.text = "" // Clear displayHistory
         
         userIsInTheMiddleOfTypingANumber = false // Reset userIsInTheMiddleOfTypingANumber
         
-        brain.opStack = []
-        brain.opStackOperand = []
-        brain.opStackOperation = []
-        brain.displayHistory = ""
+        brain.clearBrain() // Clear everything specific to the model
     }
     
     @IBAction func backspace(sender: UIButton) { // Remove digits from primary display one at a time
